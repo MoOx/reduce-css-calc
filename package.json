@@ -30,8 +30,8 @@
     "tape": "^2.13.4"
   },
   "scripts": {
-    "jscc": "jscs **/*.js",
-    "jshint": "jshint  **/*.js --reporter node_modules/jshint-stylish/stylish.js",
+    "jscs": "jscs *.js **/*.js",
+    "jshint": "jshint . --exclude node_modules --reporter node_modules/jshint-stylish/stylish.js",
     "test": "npm run jscs && npm run jshint && tape test | tap-colorize"
   }
 }

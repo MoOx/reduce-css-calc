@@ -5,18 +5,18 @@ var balanced = require("balanced-match")
 var reduceFunctionCall = require("reduce-function-call")
 
 /**
- * Expose reduceCssCalc plugin
+ * Expose reduceCSSCalc plugin
  *
  * @type {Function}
  */
-module.exports = reduceCssCalc
+module.exports = reduceCSSCalc
 
 /**
  * Reduce CSS calc() in a string, whenever it's possible
  *
  * @param {String} value css input
  */
-function reduceCssCalc(value) {
+function reduceCSSCalc(value) {
   return reduceFunctionCall(value, /((?:\-[a-z]+\-)?calc)\(/, evaluateExpression)
 }
 

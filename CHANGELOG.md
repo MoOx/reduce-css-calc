@@ -1,3 +1,7 @@
+# 1.1.1 - 2014-08-06
+
+* Fix issue when using mutiples differents prefixes in the same function
+
 # 1.1.0 - 2014-08-06
 
 * support more complex formulas

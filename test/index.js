@@ -66,6 +66,9 @@ test("reduce prefixed css calc()", function(t) {
 
   t.equal(reduceCSSCalc("-moz-calc(100px / 2)"), "50px", "-moz, complete reduce")
   t.equal(reduceCSSCalc("-moz-calc(50% - 2em)"), "-moz-calc(50% - 2em)","-moz, multiple unit")
+
+  t.equal(reduceCSSCalc("-webkit-calc(calc(-moz-calc(1rem * 0.75) * 1.5) - 1px)"), "-webkit-calc(1.125rem - 1px)", "complex prefixed formula")
+
   t.end()
 })
 

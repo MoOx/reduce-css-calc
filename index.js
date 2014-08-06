@@ -1,70 +1,23 @@
-/*
+/**
  * Module dependencies
  */
 var balanced = require("balanced-match")
+var reduceFunctionCall = require("reduce-function-call")
 
 /**
- * Constantes
- */
-var CALC_FUNC_IDENTIFIER =  "calc"
-var EXPRESSION_OPT_VENDOR_PREFIX = "(\\-[a-z]+\\-)?"
-var EXPRESSION_METHOD_REGEXP = EXPRESSION_OPT_VENDOR_PREFIX + CALC_FUNC_IDENTIFIER
-var EXPRESSION_REGEXP = "\\b" + EXPRESSION_METHOD_REGEXP + "\\("
-
-module.exports = resolveValue
-
-/**
- * Walkthrough all expressions, evaluate them and insert them into the declaration
+ * Expose reduceCssCalc plugin
  *
- * @param {Array} expressions
- * @param {Object} declaration
+ * @type {Function}
  */
-
-function resolveValue(value) {
-  getExpressions(value).forEach(function(expression) {
-    var result = evaluateExpression(expression.body)
-
-    value = value.replace(
-      expression.fn + "(" + expression.body + ")",
-      result.resolved ?
-        result.value :
-        expression.fn + "(" + result.value + ")"
-    )
-  })
-
-  return value
-}
+module.exports = reduceCssCalc
 
 /**
- * Parses expressions in a value
+ * Reduce CSS calc() in a string, whenever it's possible
  *
- * @param {String} value
- * @returns {Array}
- * @api private
+ * @param {String} value css input
  */
-
-function getExpressions(value) {
-  var expressions = []
-  var fnRE = new RegExp(EXPRESSION_METHOD_REGEXP)
-  do {
-    var searchMatch = fnRE.exec(value)
-    var fn = searchMatch[0]
-    var calcStartIndex = searchMatch.index
-    var calcRef = balanced("(", ")", value.substring(calcStartIndex))
-
-    if (!calcRef) {
-      throw new SyntaxError("calc(): missing closing ')' in the value '" + value + "'")
-    }
-    if (calcRef.body === "") {
-      throw new Error("calc(): calc() must contain a non-whitespace string")
-    }
-
-    expressions.push({fn: fn, body: calcRef.body})
-    value = calcRef.post
-  }
-  while (fnRE.test(value))
-
-  return expressions
+function reduceCssCalc(value) {
+  return reduceFunctionCall(value, /((?:\-[a-z]+\-)?calc)\(/, evaluateExpression)
 }
 
 /**
@@ -75,24 +28,34 @@ function getExpressions(value) {
  * @api private
  */
 
-function evaluateExpression (expression) {
-  // Remove method names for possible nested expressions:
-  expression = expression.replace(new RegExp(EXPRESSION_REGEXP, "g"), "(")
+function evaluateExpression (expression, functionIdentifier, call) {
+  if (expression === "") {
+    throw new Error(functionIdentifier + "(): '" + call + "' must contain a non-whitespace string")
+  }
 
   var balancedExpr = balanced("(", ")", expression)
-  if (balancedExpr) {
+  while (balancedExpr) {
     if (balancedExpr.body === "") {
-      throw new Error("calc(): () must contain a non-whitespace string")
+      throw new Error(functionIdentifier + "(): '" + expression + "' must contain a non-whitespace string")
     }
 
-    expression = balancedExpr.pre + evaluateExpression(balancedExpr.body).value + balancedExpr.post
+    var evaluated = evaluateExpression(balancedExpr.body, functionIdentifier, call)
+
+    // if result didn't change since the last try, we consider it won't change anymore
+    if (evaluated === balancedExpr.body) {
+      balancedExpr = false
+    }
+    else {
+      expression = balancedExpr.pre + evaluated + balancedExpr.post
+      balancedExpr = balanced("(", ")", expression)
+    }
   }
 
   var units = getUnitsInExpression(expression)
 
   // If multiple units let the expression be (i.e. browser calc())
   if (units.length > 1) {
-    return {resolved: false, value: expression}
+    return functionIdentifier + "(" + expression + ")"
   }
 
   var unit = units[0] || ""
@@ -112,7 +75,7 @@ function evaluateExpression (expression) {
     result = eval(toEvaluate)
   }
   catch (e) {
-    return {resolved: false, value: expression}
+    return functionIdentifier + "(" + expression + ")"
   }
 
   // Transform back to a percentage result:
@@ -125,7 +88,7 @@ function evaluateExpression (expression) {
     result += unit
   }
 
-  return {resolved: true, value: result}
+  return result
 }
 
 /**

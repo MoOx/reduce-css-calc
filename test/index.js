@@ -51,7 +51,12 @@ test("ignore value around css calc() functions ", function(t) {
 test("reduce complexe css calc()", function(t) {
   t.equal(reduceCssCalc("calc(calc(100 + 10) + 1)"), "111", "integer")
   t.equal(reduceCssCalc("calc(calc(calc(1rem * 0.75) * 1.5) - 1rem)"), "0.125rem", "with a single unit")
-  t.equal(reduceCssCalc("calc(calc(calc(1rem * 0.75) * 1.5) - 1px)"), "calc(1.125rem - 1px)", "multiple units")
+  t.equal(reduceCssCalc("calc(calc(calc(1rem * 0.75) * 1.5) - 1px)"), "calc(1.125rem - 1px)", "multiple units with explicit calc")
+  t.equal(reduceCssCalc("calc(((1rem * 0.75) * 1.5) - 1px)"), "calc(1.125rem - 1px)", "multiple units with implicit calc")
+  t.equal(reduceCssCalc("calc(-1px + (1.5 * (1rem * 0.75)))"), "calc(-1px + 1.125rem)", "multiple units with implicit calc, reverse order")
+  t.equal(reduceCssCalc("calc(2rem * (2 * (2 + 3)) + 4 + (5/2))"), "26.5rem", "complex math formula works correctly")
+
+  t.equal(reduceCssCalc("calc((4 * 2) + 4.2 + 1 + (2rem * .4) + (2px * .4))"), "calc(8 + 4.2 + 1 + 0.8rem + 0.8px)", "handle long formula")
   t.end()
 })
 
@@ -61,5 +66,10 @@ test("reduce prefixed css calc()", function(t) {
 
   t.equal(reduceCssCalc("-moz-calc(100px / 2)"), "50px", "-moz, complete reduce")
   t.equal(reduceCssCalc("-moz-calc(50% - 2em)"), "-moz-calc(50% - 2em)","-moz, multiple unit")
+  t.end()
+})
+
+test("ignore unrecognized values", function(t) {
+  t.equal(reduceCssCalc("calc((4px * 2) + 4.2 + a1 + (2rem * .4))"), "calc(8px + 4.2 + a1 + 0.8rem)", "ignore when eval fail")
   t.end()
 })

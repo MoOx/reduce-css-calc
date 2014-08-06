@@ -1,3 +1,10 @@
+# 1.1.0 - 2014-08-06
+
+* support more complex formulas
+* use `reduce-function-call`
+* better error message
+
+
 # 1.0.0 - 2014-08-04
 
 First release

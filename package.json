@@ -20,7 +20,8 @@
     "index.js"
   ],
   "dependencies": {
-    "balanced-match": "~0.1.0"
+    "balanced-match": "~0.1.0",
+    "reduce-function-call": "^1.0.0"
   },
   "devDependencies": {
     "jscs": "^1.5.9",

@@ -72,6 +72,11 @@ test("reduce prefixed css calc()", function(t) {
   t.end()
 })
 
+test("handle rounding issues", function(t) {
+  t.equal(reduceCSSCalc("calc(10% * 20%)"), "2%", "should round percentage")
+  t.end()
+})
+
 test("ignore unrecognized values", function(t) {
   t.equal(reduceCSSCalc("calc((4px * 2) + 4.2 + a1 + (2rem * .4))"), "calc(8px + 4.2 + a1 + 0.8rem)", "ignore when eval fail")
   t.end()

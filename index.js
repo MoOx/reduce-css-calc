@@ -5,6 +5,16 @@ var balanced = require("balanced-match")
 var reduceFunctionCall = require("reduce-function-call")
 
 /**
+ * Constantes
+ */
+var MAX_STACK = 100 // should be enough for a single calc()...
+
+/**
+ * Global variables
+ */
+var stack
+
+/**
  * Expose reduceCSSCalc plugin
  *
  * @type {Function}
@@ -17,6 +27,7 @@ module.exports = reduceCSSCalc
  * @param {String} value css input
  */
 function reduceCSSCalc(value) {
+  stack = 0
   return reduceFunctionCall(value, /((?:\-[a-z]+\-)?calc)\(/, evaluateExpression)
 }
 
@@ -29,6 +40,11 @@ function reduceCSSCalc(value) {
  */
 
 function evaluateExpression (expression, functionIdentifier, call) {
+  if (stack++ > MAX_STACK) {
+    stack = 0
+    throw new Error("Call stack overflow for " + call)
+  }
+
   if (expression === "") {
     throw new Error(functionIdentifier + "(): '" + call + "' must contain a non-whitespace string")
   }

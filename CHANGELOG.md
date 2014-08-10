@@ -1,3 +1,9 @@
+# 1.1.2 - 2014-08-10
+
+* Prevent infinite loop by adding a `Call stack overflow`
+* Correctly ignore unrecognized values (safer evaluation for nested expressions, see [postcss/postcss-calc#2](https://github.com/postcss/postcss-calc/issues/2))
+* Handle rounding issues (eg: 10% * 20% now give 2%, not 2.0000000000000004%)
+
 # 1.1.1 - 2014-08-06
 
 * Fix issue when using mutiples differents prefixes in the same function

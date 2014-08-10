@@ -9,6 +9,7 @@ var reduceFunctionCall = require("reduce-function-call")
  */
 var MAX_STACK = 100 // should be enough for a single calc()...
 var DECIMAL_PRECISION = 10000 // 5 decimals
+var NESTED_CALC_RE = /(\+|\-|\*|\\|[^a-z]|)(\s*)(\()/g
 
 /**
  * Global variables
@@ -37,9 +38,7 @@ function reduceCSSCalc(value) {
  *
  * @param {String} expression
  * @returns {String}
- * @api private
  */
-
 function evaluateExpression (expression, functionIdentifier, call) {
   if (stack++ > MAX_STACK) {
     stack = 0
@@ -50,23 +49,7 @@ function evaluateExpression (expression, functionIdentifier, call) {
     throw new Error(functionIdentifier + "(): '" + call + "' must contain a non-whitespace string")
   }
 
-  var balancedExpr = balanced("(", ")", expression)
-  while (balancedExpr) {
-    if (balancedExpr.body === "") {
-      throw new Error(functionIdentifier + "(): '" + expression + "' must contain a non-whitespace string")
-    }
-
-    var evaluated = evaluateExpression(balancedExpr.body, functionIdentifier, call)
-
-    // if result didn't change since the last try, we consider it won't change anymore
-    if (evaluated === balancedExpr.body) {
-      balancedExpr = false
-    }
-    else {
-      expression = balancedExpr.pre + evaluated + balancedExpr.post
-      balancedExpr = balanced("(", ")", expression)
-    }
-  }
+  expression = evaluateNestedExpression(expression, call)
 
   var units = getUnitsInExpression(expression)
 
@@ -113,11 +96,40 @@ function evaluateExpression (expression, functionIdentifier, call) {
 }
 
 /**
+ * Evaluates nested expressions
+ *
+ * @param {String} expression
+ * @returns {String}
+ */
+function evaluateNestedExpression(expression, call) {
+  var evaluatedPart = ""
+  var nonEvaluatedPart = expression
+  var matches
+  while ((matches = NESTED_CALC_RE.exec(nonEvaluatedPart))) {
+    if (matches[0].index > 0) {
+      evaluatedPart += nonEvaluatedPart.substring(0, matches[0].index)
+    }
+
+    var balancedExpr = balanced("(", ")", nonEvaluatedPart.substring([0].index))
+    if (balancedExpr.body === "") {
+      throw new Error("'" + expression + "' must contain a non-whitespace string")
+    }
+
+    var evaluated = evaluateExpression(balancedExpr.body, "", call)
+
+    evaluatedPart += balancedExpr.pre + evaluated
+    nonEvaluatedPart = balancedExpr.post
+  }
+
+  return evaluatedPart + nonEvaluatedPart
+}
+
+
+/**
  * Checks what units are used in an expression
  *
  * @param {String} expression
  * @returns {Array}
- * @api private
  */
 
 function getUnitsInExpression(expression) {

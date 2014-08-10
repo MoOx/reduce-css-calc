@@ -79,5 +79,24 @@ test("handle rounding issues", function(t) {
 
 test("ignore unrecognized values", function(t) {
   t.equal(reduceCSSCalc("calc((4px * 2) + 4.2 + a1 + (2rem * .4))"), "calc(8px + 4.2 + a1 + 0.8rem)", "ignore when eval fail")
+
+  t.equal(reduceCSSCalc("calc(z)"), "calc(z)", "ignore when there is something unknow")
+
+  t.equal(reduceCSSCalc("calc((a) + 1)"), "calc((a) + 1)", "ignore when there is something unknow in ( )")
+
+  t.equal(reduceCSSCalc("calc(1 (a))"), "calc(1 (a))", "ignore when there is something unknow in ( ) after something else")
+
+  t.equal(reduceCSSCalc("calc(b(a) + 1)"), "calc(b(a) + 1)", "ignore when there is unknown function used")
+
+  t.equal(reduceCSSCalc("calc(var(--foo) + 10px)"), "calc(var(--foo) + 10px)", "ignore when there is css var() at the beginning")
+  t.equal(reduceCSSCalc("calc(10px + var(--foo))"), "calc(10px + var(--foo))", "ignore when there is css var() at the end")
+  t.equal(reduceCSSCalc("calc(10px + var(--foo) + 2)"), "calc(10px + var(--foo) + 2)", "ignore when there is css var() in the middle")
+
+  t.equal(reduceCSSCalc("calc((4px + 8px) + --foo + (10% * 20%))"), "calc(12px + --foo + 2%)", "ignore unrecognized part")
+  t.equal(reduceCSSCalc("calc((4px + 8px) + (--foo) + (10% * 20%))"), "calc(12px + (--foo) + 2%)", "ignore unrecognized part between parenthesis")
+  t.equal(reduceCSSCalc("calc((4px + 8px) + var(--foo) + (10% * 20%))"), "calc(12px + var(--foo) + 2%)", "ignore unrecognized function")
+
+  t.equal(reduceCSSCalc("calc(calc(4px + 8px) + calc(var(--foo) + 10px) + calc(10% * 20%))"), "calc(12px + calc(var(--foo) + 10px) + 2%)", "ignore unrecognized nested call")
+
   t.end()
 })

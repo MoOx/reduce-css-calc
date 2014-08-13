@@ -8,7 +8,7 @@ var reduceFunctionCall = require("reduce-function-call")
  * Constantes
  */
 var MAX_STACK = 100 // should be enough for a single calc()...
-var DECIMAL_PRECISION = 10000 // 5 decimals
+var DECIMAL_PRECISION = 100000 // 5 decimals
 var NESTED_CALC_RE = /(\+|\-|\*|\\|[^a-z]|)(\s*)(\()/g
 
 /**

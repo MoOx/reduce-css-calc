@@ -1,3 +1,7 @@
+# 1.1.3 - 2014-08-13
+
+* 5 decimals rounding
+
 # 1.1.2 - 2014-08-10
 
 * Prevent infinite loop by adding a `Call stack overflow`

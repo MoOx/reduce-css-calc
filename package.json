@@ -16,23 +16,20 @@
   "files": [
     "CHANGELOG.md",
     "LICENSE",
-    "README.md",
     "index.js"
   ],
   "dependencies": {
-    "balanced-match": "~0.1.0",
+    "balanced-match": "^0.1.0",
     "reduce-function-call": "^1.0.1"
   },
   "devDependencies": {
     "jscs": "^1.5.9",
     "jshint": "^2.5.2",
-    "jshint-stylish": "^0.4.0",
-    "tap-colorize": "^1.2.0",
     "tape": "^2.13.4"
   },
   "scripts": {
     "jscs": "jscs *.js **/*.js",
-    "jshint": "jshint . --exclude node_modules --reporter node_modules/jshint-stylish/stylish.js",
-    "test": "npm run jscs && npm run jshint && tape test | tap-colorize"
+    "jshint": "jshint . --exclude node_modules",
+    "test": "npm run jscs && npm run jshint && tape test"
   }
 }

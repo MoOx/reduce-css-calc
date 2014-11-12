@@ -81,11 +81,11 @@ function evaluateExpression (expression, functionIdentifier, call) {
   // Transform back to a percentage result:
   if (unit === "%") {
     result *= 100
-
-    // adjust rounding shit
-    // (0.1 * 0.2 === 0.020000000000000004)
-    result = Math.round(result * DECIMAL_PRECISION) / DECIMAL_PRECISION
   }
+
+  // adjust rounding shit
+  // (0.1 * 0.2 === 0.020000000000000004)
+  result = Math.round(result * DECIMAL_PRECISION) / DECIMAL_PRECISION
 
   // We don't need units for zero values...
   if (result !== 0) {

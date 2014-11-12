@@ -1,6 +1,10 @@
+# 1.1.4 - 2014-11-12
+
+* 5 decimals rounding for everything
+
 # 1.1.3 - 2014-08-13
 
-* 5 decimals rounding
+* 5 decimals rounding for percentage
 
 # 1.1.2 - 2014-08-10
 

@@ -74,6 +74,7 @@ test("reduce prefixed css calc()", function(t) {
 
 test("handle rounding issues", function(t) {
   t.equal(reduceCSSCalc("calc(10% * 20%)"), "2%", "should round percentage")
+  t.equal(reduceCSSCalc("calc(3rem * 1.2)"), "3.6rem", "should round floats")
   t.end()
 })
 

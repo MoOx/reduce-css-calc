@@ -75,6 +75,9 @@ test("reduce prefixed css calc()", function(t) {
 test("handle rounding issues", function(t) {
   t.equal(reduceCSSCalc("calc(10% * 20%)"), "2%", "should round percentage")
   t.equal(reduceCSSCalc("calc(3rem * 1.2)"), "3.6rem", "should round floats")
+  t.equal(reduceCSSCalc("calc(1/3)"), "0.33333", "should round with default precision to 5 decimals")
+  t.equal(reduceCSSCalc("calc(1/3)", 10), "0.3333333333", "should round with desired precision (10)")
+  t.equal(reduceCSSCalc("calc(3 * 1.2)", 0), "4", "should round with desired precision (O)")
   t.end()
 })
 

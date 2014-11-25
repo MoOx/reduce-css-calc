@@ -1,16 +1,18 @@
 # reduce-css-calc [![Build Status](https://travis-ci.org/MoOx/reduce-css-calc.png)](https://travis-ci.org/MoOx/reduce-css-calc)
 
-Reduce CSS calc() function to the maximum.
+> Reduce CSS calc() function to the maximum.
 
 Particularly useful for packages like [rework-calc](https://github.com/reworkcss/rework-calc) or [postcss-calc](https://github.com/postcss/postcss-calc).
 
 ## Installation
 
-```bash
-npm install reduce-css-calc
+```console
+$ npm install reduce-css-calc
 ```
 
 ## Usage
+
+### `var reducedString = reduceCSSCalc(string, precision)`
 
 ```javascript
 var reduceCSSCalc = require('reduce-css-calc')
@@ -20,6 +22,12 @@ reduceCSSCalc("calc(1 + 1)")
 
 reduceCSSCalc("calc((6 / 2) - (4 * 2) + 1)")
 // -4
+
+reduceCSSCalc("calc(1/3)")
+// 0.33333
+
+reduceCSSCalc("calc(1/3)", 10)
+// 0.3333333333
 
 reduceCSSCalc("calc(3rem * 2 - 1rem)")
 // 5rem
@@ -52,11 +60,11 @@ See [unit tests](test/index.js) for others examples.
 
 Work on a branch, install dev-dependencies, respect coding style & run tests before submitting a bug fix or a feature.
 
-```bash
-git clone https://github.com/MoOx/reduce-css-calc.git
-git checkout -b patch-1
-npm install
-npm test
+```console
+$ git clone https://github.com/MoOx/reduce-css-calc.git
+$ git checkout -b patch-1
+$ npm install
+$ npm test
 ```
 
 ## [Changelog](CHANGELOG.md)

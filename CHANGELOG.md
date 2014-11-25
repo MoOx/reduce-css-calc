@@ -1,3 +1,7 @@
+# 1.2.0 - 2014-11-24
+
+* Decimal precision is now customisable as the `precision` option
+
 # 1.1.4 - 2014-11-12
 
 * 5 decimals rounding for everything

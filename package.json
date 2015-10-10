@@ -19,7 +19,7 @@
     "index.js"
   ],
   "dependencies": {
-    "balanced-match": "^0.1.0",
+    "balanced-match": "^0.2.0",
     "reduce-function-call": "^1.0.1"
   },
   "devDependencies": {

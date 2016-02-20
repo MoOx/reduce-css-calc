@@ -66,7 +66,7 @@ function reduceCSSCalc(value, decimalPrecision) {
     }
 
     // Remove units in expression:
-    var toEvaluate = expression.replace(new RegExp(unit, "g"), "")
+    var toEvaluate = expression.replace(new RegExp(unit, "gi"), "")
     var result
 
     try {
@@ -134,7 +134,8 @@ function reduceCSSCalc(value, decimalPrecision) {
 
 function getUnitsInExpression(expression) {
   var uniqueUnits = []
-  var unitRegEx = /[\.0-9]([%a-z]+)/g
+  var uniqueLowerCaseUnits = []
+  var unitRegEx = /[\.0-9]([%a-z]+)/gi
   var matches = unitRegEx.exec(expression)
 
   while (matches) {
@@ -142,8 +143,9 @@ function getUnitsInExpression(expression) {
       continue
     }
 
-    if (uniqueUnits.indexOf(matches[1]) === -1) {
+    if (uniqueLowerCaseUnits.indexOf(matches[1].toLowerCase()) === -1) {
       uniqueUnits.push(matches[1])
+      uniqueLowerCaseUnits.push(matches[1].toLowerCase())
     }
 
     matches = unitRegEx.exec(expression)

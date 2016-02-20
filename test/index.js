@@ -104,3 +104,12 @@ test("ignore unrecognized values", function(t) {
 
   t.end()
 })
+
+test("non-lowercase units", function(t) {
+  t.equal(reduceCSSCalc("calc(1PX)"), "1PX", "all uppercase");
+  t.equal(reduceCSSCalc("calc(1Px)"), "1Px", "first letter uppercase");
+  t.equal(reduceCSSCalc("calc(50% - 42Px)"), "calc(50% - 42Px)", "preserves percentage");
+  t.equal(reduceCSSCalc("calc(1Px + 1pX)"), "2Px", "combines same units mixed case");
+
+  t.end()
+})

@@ -1,3 +1,8 @@
+# 1.2.2 - 2016-04-19
+
+- Fixed: Don't reduce expression containing CSS variables.
+  ([#9](https://github.com/MoOx/reduce-css-calc/pull/9))
+
 # 1.2.1 - 2016-02-22
 
 - Fixed: uppercase letters in units are now supported

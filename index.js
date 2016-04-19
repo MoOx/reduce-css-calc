@@ -51,8 +51,9 @@ function reduceCSSCalc(value, decimalPrecision) {
 
     var units = getUnitsInExpression(expression)
 
-    // If multiple units let the expression be (i.e. browser calc())
-    if (units.length > 1) {
+    // If the expression contains multiple units or CSS variables,
+    // then let the expression be (i.e. browser calc())
+    if (units.length > 1 || expression.indexOf("var(") > -1) {
       return functionIdentifier + "(" + expression + ")"
     }
 

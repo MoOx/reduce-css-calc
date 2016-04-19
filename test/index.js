@@ -102,6 +102,7 @@ test("ignore unrecognized values", function(t) {
 
   t.equal(reduceCSSCalc("calc(calc(4px + 8px) + calc(var(--foo) + 10px) + calc(10% * 20%))"), "calc(12px + calc(var(--foo) + 10px) + 2%)", "ignore unrecognized nested call")
 
+  t.equal(reduceCSSCalc("calc(100% - var(--my-var))"), "calc(100% - var(--my-var))", "should not try to reduce 100% - var");
   t.end()
 })
 

@@ -56,7 +56,7 @@ test("reduce complexe css calc()", function(t) {
   t.equal(reduceCSSCalc("calc(-1px + (1.5 * (1rem * 0.75)))"), "calc(-1px + 1.125rem)", "multiple units with implicit calc, reverse order")
   t.equal(reduceCSSCalc("calc(2rem * (2 * (2 + 3)) + 4 + (5/2))"), "26.5rem", "complex math formula works correctly")
   t.equal(reduceCSSCalc("calc((4 * 2) + 4.2 + 1 + (2rem * .4) + (2px * .4))"), "calc(8 + 4.2 + 1 + 0.8rem + 0.8px)", "handle long formula")
-  t.equal(reduceCSSCalc("calc((2 * 100) / 12)"), reduceCSSCalc("calc((100 / 12) * 2)", "indentical, wrong rounded")
+  t.equal(reduceCSSCalc("calc((2 * 100) / 12)"), reduceCSSCalc("calc((100 / 12) * 2)"), "indentical, wrong rounded")
   t.end()
 })
 

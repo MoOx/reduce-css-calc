@@ -61,6 +61,7 @@ function reduceCSSCalc(value, decimalPrecision) {
 
     if (unit === "%") {
       // Convert percentages to numbers, to handle expressions like: 50% * 50% (will become: 25%):
+      // console.log(expression)
       expression = expression.replace(/\b[0-9\.]+%/g, function(percent) {
         return parseFloat(percent.slice(0, -1)) * 0.01
       })
@@ -84,7 +85,9 @@ function reduceCSSCalc(value, decimalPrecision) {
 
     // adjust rounding shit
     // (0.1 * 0.2 === 0.020000000000000004)
-    result = Math.round(result * decimalPrecision) / decimalPrecision
+    if (functionIdentifier.length || unit === "%") {
+      result = Math.round(result * decimalPrecision) / decimalPrecision
+    }
 
     // We don't need units for zero values...
     if (result !== 0) {

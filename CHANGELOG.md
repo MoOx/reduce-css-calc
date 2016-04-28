@@ -1,3 +1,8 @@
+# 1.2.3 - 2016-04-28
+
+- Fixed: wrong rouding in some edge cases
+  ([#10](https://github.com/MoOx/reduce-css-calc/pull/10))
+
 # 1.2.2 - 2016-04-19
 
 - Fixed: Don't reduce expression containing CSS variables.

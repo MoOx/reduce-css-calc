@@ -59,6 +59,7 @@ test("reduce complexe css calc()", function(t) {
   t.equal(reduceCSSCalc("calc((2 * 100) / 12)"), reduceCSSCalc("calc((100 / 12) * 2)"), "indentical, wrong rounded")
   t.equal(reduceCSSCalc("calc((2 * 100) / 12)", 3), "16.667", "indentical rounded with options")
   t.equal(reduceCSSCalc("calc((100 / 12) * 2)", 3), "16.667", "indentical rounded with options")
+  t.equal(reduceCSSCalc("calc(50% - 50vw + (100vw - 100vw) / 2 + 1em)"), "calc(50% - 50vw + 0vw / 2 + 1em)", "keep units for zero values")
   t.end()
 })
 

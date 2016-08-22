@@ -1,3 +1,5 @@
+# 1.2.7 - 2016-08-22
+
 - Fixed: regression from 1.2.5 on calc() with value without leading 0
   (@MoOx)
 

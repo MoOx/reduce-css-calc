@@ -50,12 +50,12 @@ test("ignore value around css calc() functions ", function(t) {
 
 test("reduce complexe css calc()", function(t) {
   t.equal(reduceCSSCalc("calc(calc(100 + 10) + 1)"), "111", "integer")
-  t.equal(reduceCSSCalc("calc(calc(calc(1rem * 0.75) * 1.5) - 1rem)"), "0.125rem", "with a single unit")
+  t.equal(reduceCSSCalc("calc(calc(calc(1rem * 0.75) * 1.5) - 1rem)"), ".125rem", "with a single unit")
   t.equal(reduceCSSCalc("calc(calc(calc(1rem * 0.75) * 1.5) - 1px)"), "calc(1.125rem - 1px)", "multiple units with explicit calc")
   t.equal(reduceCSSCalc("calc(((1rem * 0.75) * 1.5) - 1px)"), "calc(1.125rem - 1px)", "multiple units with implicit calc")
   t.equal(reduceCSSCalc("calc(-1px + (1.5 * (1rem * 0.75)))"), "calc(-1px + 1.125rem)", "multiple units with implicit calc, reverse order")
   t.equal(reduceCSSCalc("calc(2rem * (2 * (2 + 3)) + 4 + (5/2))"), "26.5rem", "complex math formula works correctly")
-  t.equal(reduceCSSCalc("calc((4 * 2) + 4.2 + 1 + (2rem * .4) + (2px * .4))"), "calc(8 + 4.2 + 1 + 0.8rem + 0.8px)", "handle long formula")
+  t.equal(reduceCSSCalc("calc((4 * 2) + 4.2 + 1 + (2rem * .4) + (2px * .4))"), "calc(8 + 4.2 + 1 + .8rem + .8px)", "handle long formula")
   t.equal(reduceCSSCalc("calc((2 * 100) / 12)"), reduceCSSCalc("calc((100 / 12) * 2)"), "indentical, wrong rounded")
   t.equal(reduceCSSCalc("calc((2 * 100) / 12)", 3), "16.667", "indentical rounded with options")
   t.equal(reduceCSSCalc("calc((100 / 12) * 2)", 3), "16.667", "indentical rounded with options")
@@ -78,14 +78,14 @@ test("reduce prefixed css calc()", function(t) {
 test("handle rounding issues", function(t) {
   t.equal(reduceCSSCalc("calc(10% * 20%)"), "2%", "should round percentage")
   t.equal(reduceCSSCalc("calc(3rem * 1.2)"), "3.6rem", "should round floats")
-  t.equal(reduceCSSCalc("calc(1/3)"), "0.33333", "should round with default precision to 5 decimals")
-  t.equal(reduceCSSCalc("calc(1/3)", 10), "0.3333333333", "should round with desired precision (10)")
+  t.equal(reduceCSSCalc("calc(1/3)"), ".33333", "should round with default precision to 5 decimals")
+  t.equal(reduceCSSCalc("calc(1/3)", 10), ".3333333333", "should round with desired precision (10)")
   t.equal(reduceCSSCalc("calc(3 * 1.2)", 0), "4", "should round with desired precision (O)")
   t.end()
 })
 
 test("ignore unrecognized values", function(t) {
-  t.equal(reduceCSSCalc("calc((4px * 2) + 4.2 + a1 + (2rem * .4))"), "calc(8px + 4.2 + a1 + 0.8rem)", "ignore when eval fail")
+  t.equal(reduceCSSCalc("calc((4px * 2) + 4.2 + a1 + (2rem * .4))"), "calc(8px + 4.2 + a1 + .8rem)", "ignore when eval fail")
 
   t.equal(reduceCSSCalc("calc(z)"), "calc(z)", "ignore when there is something unknow")
 
@@ -125,5 +125,11 @@ test("should handle calc() on multiple lines", function(t) {
 
 test("should handle calc() with values without leading 0", function(t) {
   t.equal(reduceCSSCalc("calc(.1 + .1 + 1.1 + 0.2)"), "1.5", "addition")
+  t.end()
+})
+
+test("trim leading zeroes", function(t) {
+  t.equal(reduceCSSCalc("calc(0.10em + 0.20em)"), ".3em")
+
   t.end()
 })

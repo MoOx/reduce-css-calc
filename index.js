@@ -101,6 +101,9 @@ function reduceCSSCalc(value, decimalPrecision) {
     // Add unit
     result += unit
 
+    // Trim leading zeroes
+    result = result.replace(/(\s|\()?0(.[0-9])/g, "$1$2")
+
     return result
   }
 

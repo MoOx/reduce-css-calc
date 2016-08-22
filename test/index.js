@@ -122,3 +122,8 @@ test("should handle calc() on multiple lines", function(t) {
   t.equal(reduceCSSCalc("calc(\n\n  1 +\n 1\n\n)"), "2", "addition")
   t.end()
 })
+
+test("should handle calc() with values without leading 0", function(t) {
+  t.equal(reduceCSSCalc("calc(.1 + .1 + 1.1 + 0.2)"), "1.5", "addition")
+  t.end()
+})

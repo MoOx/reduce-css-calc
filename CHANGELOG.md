@@ -1,3 +1,6 @@
+- Fixed: regression from 1.2.5 on calc() with value without leading 0
+  (@MoOx)
+
 # 1.2.6 - 2016-08-22
 
 - Fixed: regression from 1.2.5 on calc() on multiple lines

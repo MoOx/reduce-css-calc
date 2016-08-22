@@ -1,3 +1,5 @@
+# 1.2.5 - 2016-08-20
+
 - Fixed: security issue due to the usage of ``eval()``.
   This is to avoid an arbitrary code execution.
   Now operations are resolved using

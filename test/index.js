@@ -117,3 +117,8 @@ test("non-lowercase units", function(t) {
 
   t.end()
 })
+
+test("should handle calc() on multiple lines", function(t) {
+  t.equal(reduceCSSCalc("calc(\n\n  1 +\n 1\n\n)"), "2", "addition")
+  t.end()
+})

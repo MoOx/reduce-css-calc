@@ -1,3 +1,8 @@
+- Fixed: security issue due to the usage of ``eval()``.
+  This is to avoid an arbitrary code execution.
+  Now operations are resolved using
+  [``math-expression-evaluator``](https://github.com/redhivesoftware/math-expression-evaluator)
+
 # 1.2.4 - 2016-06-09
 
 - Fixed: zero values are not unitless anymore.

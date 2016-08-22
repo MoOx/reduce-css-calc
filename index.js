@@ -3,6 +3,7 @@
  */
 var balanced = require("balanced-match")
 var reduceFunctionCall = require("reduce-function-call")
+var mexp = require("math-expression-evaluator")
 
 /**
  * Constantes
@@ -30,6 +31,10 @@ module.exports = reduceCSSCalc
 function reduceCSSCalc(value, decimalPrecision) {
   stack = 0
   decimalPrecision = Math.pow(10, decimalPrecision === undefined ? 5 : decimalPrecision)
+
+  // CSS allow to omit 0 for 0.* values,
+  // but math-expression-evaluator does not
+  value = value.replace(/\s(\.[0-9])/g, " 0$1")
 
   /**
    * Evaluates an expression
@@ -72,7 +77,7 @@ function reduceCSSCalc(value, decimalPrecision) {
     var result
 
     try {
-      result = eval(toEvaluate)
+      result = mexp.eval(toEvaluate)
     }
     catch (e) {
       return functionIdentifier + "(" + expression + ")"

@@ -32,13 +32,8 @@ function reduceCSSCalc(value, decimalPrecision) {
   stack = 0
   decimalPrecision = Math.pow(10, decimalPrecision === undefined ? 5 : decimalPrecision)
 
-  value = value
-    // CSS allow to omit 0 for 0.* values,
-    // but math-expression-evaluator does not
-    .replace(/(\s|\()(\.[0-9])/g, "$10$2")
-
-    // allow calc() on multiple lines
-    .replace(/\n+/g, " ")
+  // Allow calc() on multiple lines
+  value = value.replace(/\n+/g, " ")
 
   /**
    * Evaluates an expression

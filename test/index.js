@@ -103,7 +103,7 @@ test("ignore unrecognized values", function(t) {
   t.equal(reduceCSSCalc("calc((4px + 8px) + (--foo) + (10% * 20%))"), "calc(12px + (--foo) + 2%)", "ignore unrecognized part between parenthesis")
   t.equal(reduceCSSCalc("calc((4px + 8px) + var(--foo) + (10% * 20%))"), "calc(12px + var(--foo) + 2%)", "ignore unrecognized function")
 
-  t.equal(reduceCSSCalc("calc(calc(4px + 8px) + calc(var(--foo) + 10px) + calc(10% * 20%))"), "calc(12px + calc(var(--foo) + 10px) + 2%)", "ignore unrecognized nested call")
+  t.equal(reduceCSSCalc("calc(calc(4px + 8px) + calc(var(--foo) + 10px) + calc(10% * 20%))"), "calc(12px + (var(--foo) + 10px) + 2%)", "ignore unrecognized nested call")
 
   t.equal(reduceCSSCalc("calc(100% - var(--my-var))"), "calc(100% - var(--my-var))", "should not try to reduce 100% - var");
   t.end()
@@ -125,5 +125,12 @@ test("should handle calc() on multiple lines", function(t) {
 
 test("should handle calc() with values without leading 0", function(t) {
   t.equal(reduceCSSCalc("calc(.1 + .1 + 1.1 + 0.2)"), "1.5", "addition")
+  t.end()
+})
+
+test("should remove calc from unresolved nested expressions", function(t) {
+  t.equal(reduceCSSCalc("-webkit-calc(21vh + -webkit-calc(21vh + 80px * 1/3 + 5px) + -webkit-calc(10vw + 80px * 2/3))"), "-webkit-calc(21vh + (21vh + 80px * 1/3 + 5px) + (10vw + 80px * 2/3))")
+  t.equal(reduceCSSCalc("-moz-calc(21vh + -moz-calc(21vh + 80px * 1/3 + 5px) + -moz-calc(10vw + 80px * 2/3))"), "-moz-calc(21vh + (21vh + 80px * 1/3 + 5px) + (10vw + 80px * 2/3))")
+  t.equal(reduceCSSCalc("calc(21vh + calc(21vh + 80px * 1/3 + 5px) + calc(10vw + 80px * 2/3))"), "calc(21vh + (21vh + 80px * 1/3 + 5px) + (10vw + 80px * 2/3))")
   t.end()
 })

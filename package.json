@@ -15,7 +15,7 @@
   ],
   "dependencies": {
     "balanced-match": "^0.1.0",
-    "math-expression-evaluator": "^1.2.9",
+    "math-expression-evaluator": "^1.2.14",
     "reduce-function-call": "^1.0.1"
   },
   "devDependencies": {

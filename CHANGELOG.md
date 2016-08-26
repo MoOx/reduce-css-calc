@@ -1,3 +1,8 @@
+# 1.2.8 - 2016-08-26
+
+- Fixed: regression from 1.2.5 on calc() with value without leading 0
+  ([#17](https://github.com/MoOx/reduce-css-calc/pull/17) - @ben-eb)
+
 # 1.2.7 - 2016-08-22
 
 - Fixed: regression from 1.2.5 on calc() with value without leading 0

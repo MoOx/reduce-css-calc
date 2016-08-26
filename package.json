@@ -14,7 +14,7 @@
     "index.js"
   ],
   "dependencies": {
-    "balanced-match": "^0.1.0",
+    "balanced-match": "^0.4.2",
     "math-expression-evaluator": "^1.2.14",
     "reduce-function-call": "^1.0.1"
   },

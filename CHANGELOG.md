@@ -1,3 +1,9 @@
+# 1.3.0 - 2016-08-26
+
+- Added: calc identifier from unresolved nested expressions are removed for
+  better browser support
+  ([#19](https://github.com/MoOx/reduce-css-calc/pull/19) - @ben-eb)
+
 # 1.2.8 - 2016-08-26
 
 - Fixed: regression from 1.2.5 on calc() with value without leading 0

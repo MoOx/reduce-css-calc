@@ -106,6 +106,9 @@ function reduceCSSCalc(value, decimalPrecision) {
    * @returns {String}
    */
   function evaluateNestedExpression(expression, call) {
+    // Remove the calc part from nested expressions to ensure
+    // better browser compatibility
+    expression = expression.replace(/((?:\-[a-z]+\-)?calc)/g, "")
     var evaluatedPart = ""
     var nonEvaluatedPart = expression
     var matches

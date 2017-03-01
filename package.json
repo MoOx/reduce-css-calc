@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "css-unit-converter": "^1.1.1",
+    "object-assign": "^4.1.0",
     "postcss-value-parser": "^3.3.0"
   }
 }

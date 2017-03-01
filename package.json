@@ -9,8 +9,7 @@
   ],
   "main": "dist/index.js",
   "files": [
-    "dist",
-    "LICENSE"
+    "dist"
   ],
   "scripts": {
     "prepublish": "npm run build && del-cli dist/__tests__",
@@ -40,7 +39,6 @@
   },
   "dependencies": {
     "css-unit-converter": "^1.1.1",
-    "postcss": "^5.2.6",
     "postcss-value-parser": "^3.3.0"
   }
 }

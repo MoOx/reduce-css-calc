@@ -1,4 +1,3 @@
-import assign from 'object-assign';
 import convert from './convert';
 
 function reduce(node, precision) {
@@ -58,7 +57,7 @@ function reduceAddSubExpression(node, precision) {
   // value + value
   // value - value
   if (left.type === right.type && left.type !== 'MathExpression') {
-    node = assign({ }, left);
+    node = Object.assign({ }, left);
     if (op === "+")
       node.value = left.value + right.value;
     else
@@ -72,7 +71,7 @@ function reduceAddSubExpression(node, precision) {
     // value - (value + something) => (value - value) + something
     // value - (value - something) => (value - value) - something
     if (left.type === right.left.type) {
-      node = assign({ }, node);
+      node = Object.assign({ }, node);
       node.left = reduce({
         type: 'MathExpression',
         operator: op,
@@ -87,7 +86,7 @@ function reduceAddSubExpression(node, precision) {
     // value - (something + value) => (value + value) - something
     // value - (something - value) => (value - value) - something
     else if (left.type === right.right.type) {
-      node = assign({ }, node);
+      node = Object.assign({ }, node);
       node.left = reduce({
         type: 'MathExpression',
         operator: right.operator,
@@ -106,7 +105,7 @@ function reduceAddSubExpression(node, precision) {
     // (value + something) - value => (value - value) + something
     // (value - something) - value => (value - value) - something
     if (right.type === left.left.type) {
-      node = assign({ }, left);
+      node = Object.assign({ }, left);
       node.left = reduce({
         type: 'MathExpression',
         operator: op,
@@ -120,7 +119,7 @@ function reduceAddSubExpression(node, precision) {
     // (something + value) - value => something + (value - value)
     // (something - value) - value => something - (value - value)
     else if (right.type === left.right.type) {
-      node = assign({ }, left);
+      node = Object.assign({ }, left);
       node.right = reduce({
         type: 'MathExpression',
         operator: op,

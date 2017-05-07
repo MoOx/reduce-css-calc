@@ -1,4 +1,5 @@
 import test from 'ava';
+
 import reduceCalc from '..';
 
 function testFixture(t, fixture, expected = null, precision = 5) {

@@ -41,9 +41,7 @@ function convertMathExpression(node, precision) {
 }
 
 function reduceAddSubExpression(node, precision) {
-  let op = node.operator;
-  let left = node.left;
-  let right = node.right;
+  const {left, right, operator: op} = node;
 
   // something + 0 => something
   // something - 0 => something

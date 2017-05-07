@@ -7,7 +7,7 @@ const order = {
 
 function round(value, prec) {
   if (prec !== false) {
-    let precision = Math.pow(10, prec);
+    const precision = Math.pow(10, prec);
     return Math.round(value * precision) / precision;
   }
   return value;
@@ -15,10 +15,8 @@ function round(value, prec) {
 
 function stringify(node, prec) {
   switch (node.type) {
-    case "MathExpression":
-      let op = node.operator;
-      let left = node.left;
-      let right = node.right;
+    case "MathExpression": {
+      const {left, right, operator: op} = node;
       let str = "";
 
       if (left.type === 'MathExpression' && order[op] < order[left.operator])
@@ -34,6 +32,7 @@ function stringify(node, prec) {
         str += stringify(right, prec);
 
       return str;
+    }
     case "Value":
       return round(node.value, prec);
     default:

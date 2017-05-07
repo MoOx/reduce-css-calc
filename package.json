@@ -31,6 +31,7 @@
     "cross-env": "^3.1.4",
     "del-cli": "^0.2.1",
     "eslint": "^3.12.2",
+    "eslint-config-i-am-meticulous": "^6.0.1",
     "eslint-plugin-babel": "^4.0.0",
     "eslint-plugin-import": "^2.2.0",
     "jison": "^0.4.17"
@@ -38,5 +39,9 @@
   "dependencies": {
     "css-unit-converter": "^1.1.1",
     "postcss-value-parser": "^3.3.0"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "extends": "eslint-config-i-am-meticulous"
   }
 }

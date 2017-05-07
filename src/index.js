@@ -1,5 +1,6 @@
 import valueParser from 'postcss-value-parser';
-import { parser } from './parser';
+
+import { parser } from './parser'; // eslint-disable-line
 import reducer from './lib/reducer';
 import stringifier from './lib/stringifier';
 
@@ -12,12 +13,12 @@ export default (value, precision = 5) => {
       return;
 
     // stringify calc expression and produce an AST
-    let contents = valueParser.stringify(node.nodes);
-    let ast = parser.parse(contents);
+    const contents = valueParser.stringify(node.nodes);
+    const ast = parser.parse(contents);
 
     // reduce AST to its simplest form, that is, either to a single value
     // or a simplified calc expression
-    let reducedAst = reducer(ast, precision);
+    const reducedAst = reducer(ast, precision);
 
     // stringify AST and write it back
     node.type = 'word';

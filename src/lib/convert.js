@@ -1,4 +1,4 @@
-import convertUnits from 'css-unit-converter';
+import convertUnits from 'css-unit-converter'
 
 function convertNodes(left, right, precision) {
   switch (left.type) {
@@ -7,9 +7,9 @@ function convertNodes(left, right, precision) {
     case 'TimeValue':
     case 'FrequencyValue':
     case 'ResolutionValue':
-      return convertAbsoluteLength(left, right, precision);
+      return convertAbsoluteLength(left, right, precision)
     default:
-      return { left, right };
+      return { left, right }
   }
 }
 
@@ -19,9 +19,9 @@ function convertAbsoluteLength(left, right, precision) {
       type: left.type,
       value: convertUnits(right.value, right.unit, left.unit, precision),
       unit: left.unit
-    };
+    }
   }
-  return { left, right };
+  return { left, right }
 }
 
-export default convertNodes;
+export default convertNodes

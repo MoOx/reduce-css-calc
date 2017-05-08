@@ -1,3 +1,8 @@
+# 2.0.1 - 2017-05-08
+
+- Fixed: Support for nested calc e.g. `calc(100% - calc(50px - 25px))`.
+- Fixed: Support for CSS variables e.g. `calc(var(--mouseX) * 1px)`.
+
 # 2.0.0 - 2017-05-08
 
 - Rewritten with a jison parser for more accurate value parsing.

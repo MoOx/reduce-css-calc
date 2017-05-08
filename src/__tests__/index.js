@@ -168,6 +168,19 @@ test(
   'calc(1px + 1)'
 )
 
+test(
+  'should reduce consecutive substractions (#24) (1)',
+  testFixture,
+  'calc(100% - 120px - 60px)',
+  'calc(100% - 180px)'
+)
+
+test(
+  'should reduce consecutive substractions (#24) (2)',
+  testFixture,
+  'calc(100% - 10px - 20px)',
+  'calc(100% - 30px)'
+)
 
 test(
   'should produce simpler result (postcss-calc#25) (1)',

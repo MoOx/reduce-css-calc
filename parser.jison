@@ -37,6 +37,9 @@
 ([0-9]+("."[0-9]+)?|"."[0-9]+)\%       return 'PERCENTAGE';
 ([0-9]+("."[0-9]+)?|"."[0-9]+)\b       return 'NUMBER';
 
+(calc)                                 return 'NESTED_CALC';
+([a-z]+)                               return 'PREFIX';
+
 "("                                    return 'LPAREN';
 ")"                                    return 'RPAREN';
 
@@ -63,6 +66,8 @@ expression
   	| math_expression MUL math_expression { $$ = { type: 'MathExpression', operator: $2, left: $1, right: $3 }; }
   	| math_expression DIV math_expression { $$ = { type: 'MathExpression', operator: $2, left: $1, right: $3 }; }
   	| LPAREN math_expression RPAREN { $$ = $2; }
+    | NESTED_CALC LPAREN math_expression RPAREN { $$ = $3; }
+    | SUB PREFIX SUB NESTED_CALC LPAREN math_expression RPAREN { $$ = $6; }
   	| css_value { $$ = $1; }
   	| value { $$ = $1; }
     ;

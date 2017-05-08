@@ -71,6 +71,20 @@ test(
 )
 
 test(
+  'should reduce nested calc',
+  testFixture,
+  'calc(100% - calc(50% + 25px))',
+  'calc(50% - 25px)'
+)
+
+test(
+  'should reduce prefixed nested calc',
+  testFixture,
+  '-webkit-calc(100% - -webkit-calc(50% + 25px))',
+  '-webkit-calc(50% - 25px)'
+)
+
+test(
   'should reduce calc with newline characters',
   testFixture,
   'calc(\n1rem \n* 2 \n* 1.5)',

@@ -64,11 +64,19 @@ test(
 )
 
 test(
+  'should handle fractions',
+  testFixture,
+  'calc(10.px + .0px)',
+  '10px'
+)
+
+test(
   'should ignore value surrounding calc function (1)',
   testFixture,
   'a calc(1px + 1px)',
   'a 2px'
 )
+
 
 test(
   'should ignore value surrounding calc function (2)',

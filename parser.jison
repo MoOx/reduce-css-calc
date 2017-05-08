@@ -38,6 +38,7 @@
 ([0-9]+("."[0-9]+)?|"."[0-9]+)\b       return 'NUMBER';
 
 (calc)                                 return 'NESTED_CALC';
+(var\(.*\))                            return 'CSS_VAR';
 ([a-z]+)                               return 'PREFIX';
 
 "("                                    return 'LPAREN';
@@ -68,6 +69,7 @@ expression
   	| LPAREN math_expression RPAREN { $$ = $2; }
     | NESTED_CALC LPAREN math_expression RPAREN { $$ = $3; }
     | SUB PREFIX SUB NESTED_CALC LPAREN math_expression RPAREN { $$ = $6; }
+    | css_variable { $$ = $1; }
   	| css_value { $$ = $1; }
   	| value { $$ = $1; }
     ;
@@ -76,6 +78,10 @@ expression
   	: NUMBER { $$ = { type: 'Value', value: parseFloat($1) }; }
   	| SUB NUMBER { $$ = { type: 'Value', value: parseFloat($2) * -1 }; }
   	;
+
+  css_variable
+    : CSS_VAR { $$ = { type: 'CssVariable', value: $1 }; }
+    ;
 
   css_value
   	: LENGTH { $$ = { type: 'LengthValue', value: parseFloat($1), unit: /[a-z]+/.exec($1)[0] }; }

@@ -35,6 +35,8 @@ function stringify(node, prec) {
     }
     case "Value":
       return round(node.value, prec)
+    case 'CssVariable':
+      return node.value
     default:
       return round(node.value, prec) + node.unit
   }

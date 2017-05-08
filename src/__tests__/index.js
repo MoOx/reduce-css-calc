@@ -85,6 +85,12 @@ test(
 )
 
 test(
+  'should ignore calc with css variables',
+  testFixture,
+  'calc(var(--mouseX) * 1px)'
+)
+
+test(
   'should reduce calc with newline characters',
   testFixture,
   'calc(\n1rem \n* 2 \n* 1.5)',

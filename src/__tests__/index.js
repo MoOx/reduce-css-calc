@@ -43,6 +43,20 @@ test(
 )
 
 test(
+  'should reduce additions and subtractions (1)',
+  testFixture,
+  'calc(100% - 10px + 20px)',
+  'calc(100% + 10px)'
+)
+
+test(
+  'should reduce additions and subtractions (2)',
+  testFixture,
+  'calc(100% + 10px - 20px)',
+  'calc(100% - 10px)'
+)
+
+test(
   'should ignore value surrounding calc function (1)',
   testFixture,
   'a calc(1px + 1px)',

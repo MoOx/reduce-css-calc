@@ -113,17 +113,32 @@ function reduceAddSubExpression(node, precision) {
       return reduce(node, precision)
     }
     // (something + value) + value => something + (value + value)
-    // (something - value) + value => something - (value + value)
+    // (something - value1) + value2 => something - (value2 - value1)
     // (something + value) - value => something + (value - value)
     // (something - value) - value => something - (value + value)
     else if (right.type === left.right.type) {
       node = Object.assign({ }, left)
-      node.right = reduce({
-        type: 'MathExpression',
-        operator: op === left.operator && op === '-' ? '+' : op,
-        left: left.right,
-        right: right
-      }, precision)
+      if (left.operator === '-') {
+        node.right = reduce({
+          type: 'MathExpression',
+          operator: op === left.operator ? '+' : '-',
+          left: right,
+          right: left.right
+        }, precision)
+        node.operator = op === left.operator ? '-' : '+';
+      }
+      else {
+        node.right = reduce({
+          type: 'MathExpression',
+          operator: op,
+          left: left.right,
+          right: right
+        }, precision)
+      }
+      if (node.right.value < 0) {
+        node.right.value *= -1;
+        node.operator = '-';
+      }
       return reduce(node, precision)
     }
   }

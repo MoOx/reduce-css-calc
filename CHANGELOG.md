@@ -1,3 +1,20 @@
+# 2.0.0 - 2017-05-08
+
+- Rewritten with a jison parser for more accurate value parsing.
+- Breaking: reduce-css-calc will now throw when trying to multiply or divide
+  by the same unit (e.g. `calc(200px * 20px)`), and also when trying to divide
+  by zero.
+- Added: Better handling of zero values (e.g. `calc(100vw / 2 - 6px + 0px)`
+  becomes `calc(100vw / 2 - 6px)`).
+- Added: Better handling of mixed time values (e.g. `calc(1s - 50ms)`
+  becomes `0.95s`).
+- Added: Inner parentheses calculation to simplify complex expressions (e.g.
+  `calc(14px + 6 * ((100vw - 320px) / 448))` becomes `calc(9.71px + 1.34vw)`
+  with precision set to `2`).
+- Fixed: `calc(1px + 1)` does not evaluate to `2px`.
+
+([#22](https://github.com/MoOx/reduce-css-calc/pull/22) - @andyjansson)
+
 # 1.3.0 - 2016-08-26
 
 - Added: calc identifier from unresolved nested expressions are removed for

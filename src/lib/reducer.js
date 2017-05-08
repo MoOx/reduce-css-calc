@@ -121,11 +121,11 @@ function reduceAddSubExpression(node, precision) {
       if (left.operator === '-') {
         node.right = reduce({
           type: 'MathExpression',
-          operator: op === left.operator ? '+' : '-',
+          operator: op === '-' ? '+' : '-',
           left: right,
           right: left.right
         }, precision)
-        node.operator = op === left.operator ? '-' : '+';
+        node.operator = op === '-' ? '-' : '+';
       }
       else {
         node.right = reduce({
@@ -137,7 +137,7 @@ function reduceAddSubExpression(node, precision) {
       }
       if (node.right.value < 0) {
         node.right.value *= -1;
-        node.operator = '-';
+        node.operator = node.operator === '-' ? '+' : '-';
       }
       return reduce(node, precision)
     }

@@ -1,3 +1,8 @@
+# 2.0.2 - 2017-05-08
+
+- Fixed: Regression in consecutive subtraction handling
+  ([#25](https://github.com/MoOx/reduce-css-calc/pull/25) - @andyjansson)
+
 # 2.0.1 - 2017-05-08
 
 - Fixed: Support for nested calc e.g. `calc(100% - calc(50px - 25px))`.

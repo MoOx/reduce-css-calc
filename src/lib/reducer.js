@@ -65,6 +65,9 @@ function convertMathExpression(node, precision) {
 function reduceAddSubExpression(node, precision) {
   const {left, right, operator: op} = node
 
+  if (left.type === 'CssVariable' || right.type === 'CssVariable')
+    return node
+
   // something + 0 => something
   // something - 0 => something
   if (right.value === 0)
@@ -125,7 +128,7 @@ function reduceAddSubExpression(node, precision) {
   // (expr) <op> value
   if (
     left.type === 'MathExpression' &&
-    (left.operator === '+' || left.operator === '-') &&    
+    (left.operator === '+' || left.operator === '-') &&
     isValueType(right.type)
   ) {
     // (value + something) + value => (value + value) + something
@@ -176,7 +179,7 @@ function reduceAddSubExpression(node, precision) {
 }
 
 function reduceDivisionExpression(node) {
-  if (node.right.type === 'MathExpression')
+  if (!isValueType(node.right.type))
     return node
 
   if (node.right.type !== 'Value')
@@ -188,7 +191,7 @@ function reduceDivisionExpression(node) {
   // (expr) / value
   if (node.left.type === 'MathExpression') {
     if (
-      isValueType(node.left.left.type) && 
+      isValueType(node.left.left.type) &&
       isValueType(node.left.right.type)
     ) {
       node.left.left.value /= node.right.value

@@ -127,6 +127,27 @@ test(
 )
 
 test(
+  'should ignore calc with css variables (3)',
+  testFixture,
+  'calc(10px - (100px + var(--mouseX)))',
+  'calc(-90px - var(--mouseX))'
+)
+
+test(
+  'should ignore calc with css variables (4)',
+  testFixture,
+  'calc(10px - (100px / var(--mouseX)))',
+  'calc(10px - 100px / var(--mouseX))'
+)
+
+test(
+  'should ignore calc with css variables (5)',
+  testFixture,
+  'calc(10px - (100px - var(--mouseX)))',
+  'calc(-90px - var(--mouseX))'
+)
+
+test(
   'should reduce calc with newline characters',
   testFixture,
   'calc(\n1rem \n* 2 \n* 1.5)',

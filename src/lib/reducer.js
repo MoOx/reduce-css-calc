@@ -11,6 +11,28 @@ function isEqual(left, right) {
   return left.type === right.type && left.value === right.value
 }
 
+function isValueType(type) {
+  switch (type) {
+    case 'LengthValue':
+    case 'AngleValue':
+    case 'TimeValue':
+    case 'FrequencyValue':
+    case 'ResolutionValue':
+    case 'EmValue':
+    case 'ExValue':
+    case 'ChValue':
+    case 'RemValue':
+    case 'VhValue':
+    case 'VwValue':
+    case 'VminValue':
+    case 'VmaxValue':
+    case 'PercentageValue':
+    case 'Value':
+      return true;
+  }
+  return false;
+}
+
 function convertMathExpression(node, precision) {
   let nodes = convert(node.left, node.right, precision)
   let left = reduce(nodes.left, precision)
@@ -54,7 +76,7 @@ function reduceAddSubExpression(node, precision) {
 
   // value + value
   // value - value
-  if (left.type === right.type && left.type !== 'MathExpression') {
+  if (left.type === right.type && isValueType(left.type)) {
     node = Object.assign({ }, left)
     if (op === "+")
       node.value = left.value + right.value
@@ -63,7 +85,11 @@ function reduceAddSubExpression(node, precision) {
   }
 
   // value <op> (expr)
-  if (left.type !== 'MathExpression' && right.type === 'MathExpression') {
+  if (
+    isValueType(left.type) &&
+    (right.operator === '+' || right.operator === '-') &&
+    right.type === 'MathExpression'
+  ) {
     // value + (value + something) => (value + value) + something
     // value + (value - something) => (value + value) - something
     // value - (value + something) => (value - value) + something
@@ -97,7 +123,11 @@ function reduceAddSubExpression(node, precision) {
   }
 
   // (expr) <op> value
-  if (left.type === 'MathExpression' && right.type !== 'MathExpression') {
+  if (
+    left.type === 'MathExpression' &&
+    (left.operator === '+' || left.operator === '-') &&    
+    isValueType(right.type)
+  ) {
     // (value + something) + value => (value + value) + something
     // (value - something) + value => (value + value) - something
     // (value + something) - value => (value - value) + something
@@ -158,8 +188,8 @@ function reduceDivisionExpression(node) {
   // (expr) / value
   if (node.left.type === 'MathExpression') {
     if (
-      node.left.left.type !== 'MathExpression' &&
-      node.left.right.type !== 'MathExpression'
+      isValueType(node.left.left.type) && 
+      isValueType(node.left.right.type)
     ) {
       node.left.left.value /= node.right.value
       node.left.right.value /= node.right.value
@@ -177,8 +207,8 @@ function reduceMultiplicationExpression(node) {
   // (expr) * value
   if (node.left.type === 'MathExpression' && node.right.type === 'Value') {
     if (
-      node.left.left.type !== 'MathExpression' &&
-      node.left.right.type !== 'MathExpression'
+      isValueType(node.left.left.type) &&
+      isValueType(node.left.right.type)
     ) {
       node.left.left.value *= node.right.value
       node.left.right.value *= node.right.value
@@ -186,15 +216,15 @@ function reduceMultiplicationExpression(node) {
     }
   }
   // something * value
-  else if (node.left.type !== 'MathExpression' &&node.right.type === 'Value') {
+  else if (isValueType(node.left.type) && node.right.type === 'Value') {
     node.left.value *= node.right.value
     return node.left
   }
   // value * (expr)
   else if (node.left.type === 'Value' && node.right.type === 'MathExpression') {
     if (
-      node.right.left.type !== 'MathExpression' &&
-      node.right.right.type !== 'MathExpression'
+      isValueType(node.right.left.type) &&
+      isValueType(node.right.right.type)
     ) {
       node.right.left.value *= node.left.value
       node.right.right.value *= node.left.value
@@ -202,7 +232,7 @@ function reduceMultiplicationExpression(node) {
     }
   }
   // value * something
-  else if (node.left.type === 'Value' && node.right.type !== 'MathExpression') {
+  else if (node.left.type === 'Value' && isValueType(node.right.type)) {
     node.right.value *= node.left.value
     return node.right
   }

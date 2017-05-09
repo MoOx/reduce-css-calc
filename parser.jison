@@ -38,7 +38,7 @@
 ([0-9]+("."[0-9]*)?|"."[0-9]+)\b       return 'NUMBER';
 
 (calc)                                 return 'NESTED_CALC';
-(var\(.*\))                            return 'CSS_VAR';
+(var\([^\)]*\))                        return 'CSS_VAR';
 ([a-z]+)                               return 'PREFIX';
 
 "("                                    return 'LPAREN';

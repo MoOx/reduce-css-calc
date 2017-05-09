@@ -114,9 +114,16 @@ test(
 )
 
 test(
-  'should ignore calc with css variables',
+  'should ignore calc with css variables (1)',
   testFixture,
   'calc(var(--mouseX) * 1px)'
+)
+
+test(
+  'should ignore calc with css variables (2)',
+  testFixture,
+  'calc(10px - (100px * var(--mouseX)))',
+  'calc(10px - 100px * var(--mouseX))'
 )
 
 test(

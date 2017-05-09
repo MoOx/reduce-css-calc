@@ -1,3 +1,8 @@
+# 2.0.3 - 2017-05-09
+
+- Fixed: Regression in handling decimals without having any numbers after
+  the decimal place (e.g. `10.px`).
+
 # 2.0.2 - 2017-05-08
 
 - Fixed: Regression in consecutive subtraction handling

@@ -1,3 +1,8 @@
+# 2.0.4 - 2017-05-09
+
+- Fixed: CSS variable regex was overly greedy and caused a crash in some
+  cases. ([#27](https://github.com/MoOx/reduce-css-calc/pull/27) - @andyjansson)
+
 # 2.0.3 - 2017-05-09
 
 - Fixed: Regression in handling decimals without having any numbers after

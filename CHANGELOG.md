@@ -1,3 +1,7 @@
+# 2.0.5 - 2017-05-12
+
+- Fixed: Support division with a CSS variable.
+
 # 2.0.4 - 2017-05-09
 
 - Fixed: CSS variable regex was overly greedy and caused a crash in some

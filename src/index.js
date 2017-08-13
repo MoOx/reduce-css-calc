@@ -4,7 +4,7 @@ import { parser } from './parser' // eslint-disable-line
 import reducer from './lib/reducer'
 import stringifier from './lib/stringifier'
 
-const MATCH_CALC = /((?:\-[a-z]+\-)?calc)/
+const MATCH_CALC = /^((?:\-[a-z]+\-)?calc)$/
 
 export default (value, precision = 5) => {
   return valueParser(value).walk(node => {

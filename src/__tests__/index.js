@@ -205,6 +205,12 @@ test(
 )
 
 test(
+  'should not match "calc" in another function signature',
+  testFixture,
+  '-calc(1px + 1px)',
+)
+
+test(
   'should discard zero values (#2) (1)',
   testFixture,
   'calc(100vw / 2 - 6px + 0px)',

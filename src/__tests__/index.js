@@ -50,6 +50,13 @@ test(
 )
 
 test(
+  'should reduce simple calc (6)',
+  testFixture,
+  'calc(100px - (100px - 100%))',
+  '100%'
+)
+
+test(
   'should reduce additions and subtractions (1)',
   testFixture,
   'calc(100% - 10px + 20px)',
@@ -144,7 +151,7 @@ test(
   'should ignore calc with css variables (5)',
   testFixture,
   'calc(10px - (100px - var(--mouseX)))',
-  'calc(-90px - var(--mouseX))'
+  'calc(-90px + var(--mouseX))'
 )
 
 test(

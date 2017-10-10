@@ -95,8 +95,8 @@ function reduceAddSubExpression(node, precision) {
   ) {
     // value + (value + something) => (value + value) + something
     // value + (value - something) => (value + value) - something
-    // value - (value + something) => (value - value) + something
-    // value - (value - something) => (value - value) - something
+    // value - (value + something) => (value - value) - something
+    // value - (value - something) => (value - value) + something
     if (left.type === right.left.type) {
       node = Object.assign({ }, node)
       node.left = reduce({
@@ -106,6 +106,11 @@ function reduceAddSubExpression(node, precision) {
         right: right.left
       }, precision)
       node.right = right.right
+
+      if (node.operator === '-') {
+        node.operator = right.operator === '+' ? '-' : '+'
+      }
+
       return reduce(node, precision)
     }
     // value + (something + value) => (value + value) + something

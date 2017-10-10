@@ -1,3 +1,8 @@
+# 2.1.0 - 2017-10-10
+
+- Added: Support for working in browsers without transpiling (#33)
+- Fixed: `calc(100vw - (100vw - 100%))` does not evaluate to `100%` (#28)
+
 # 2.0.5 - 2017-05-12
 
 - Fixed: Support division with a CSS variable.

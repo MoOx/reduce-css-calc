@@ -1,7 +1,11 @@
+# 2.1.1 - 2017-10-12
+
+- Fixed: Incorrect reduction of nested expression (e.g. `calc( (1em - calc( 10px + 1em)) / 2)`) ([#39](https://github.com/MoOx/reduce-css-calc/pull/39) - @gyoshev)
+
 # 2.1.0 - 2017-10-10
 
-- Added: Support for working in browsers without transpiling (#33)
-- Fixed: `calc(100vw - (100vw - 100%))` does not evaluate to `100%` (#28)
+- Added: Support for working in browsers without transpiling ([#36](https://github.com/MoOx/reduce-css-calc/pull/36) - @Semigradsky)
+- Fixed: `calc(100vw - (100vw - 100%))` does not evaluate to `100%` ([#35](https://github.com/MoOx/reduce-css-calc/pull/35) - @Semigradsky)
 
 # 2.0.5 - 2017-05-12
 

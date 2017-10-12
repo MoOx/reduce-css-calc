@@ -303,3 +303,24 @@ test(
   'calc(500px/2px)',
   'Cannot divide by "px", number expected'
 )
+
+test(
+  'should reduce substraction from zero',
+  testFixture,
+  'calc( 0 - 10px)',
+  '-10px'
+)
+
+test(
+  'should reduce subtracted expression from zero',
+  testFixture,
+  'calc( 0 - calc(1px + 1em) )',
+  'calc(-1px + -1em)'
+)
+
+test(
+  'should reduce nested expression',
+  testFixture,
+  'calc( (1em - calc( 10px + 1em)) / 2)',
+  '-5px'
+)

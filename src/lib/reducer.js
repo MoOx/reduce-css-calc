@@ -62,6 +62,20 @@ function convertMathExpression(node, precision) {
   return node
 }
 
+function flip(operator) {
+  return operator === '+' ? '-' : '+'
+}
+
+function flipValue(node) {
+  if (isValueType(node.type))
+    node.value = -node.value
+  else if (node.type == 'MathExpression') {
+    node.left = flipValue(node.left)
+    node.right = flipValue(node.right)
+  }
+  return node
+}
+
 function reduceAddSubExpression(node, precision) {
   const {left, right, operator: op} = node
 
@@ -76,6 +90,10 @@ function reduceAddSubExpression(node, precision) {
   // 0 + something => something
   if (left.value === 0 && op === "+")
     return right
+
+  // 0 - something => -something
+  if (left.value === 0 && op === "-")
+    return flipValue(right)
 
   // value + value
   // value - value
@@ -115,13 +133,13 @@ function reduceAddSubExpression(node, precision) {
     }
     // value + (something + value) => (value + value) + something
     // value + (something - value) => (value - value) + something
-    // value - (something + value) => (value + value) - something
-    // value - (something - value) => (value - value) - something
+    // value - (something + value) => (value - value) - something
+    // value - (something - value) => (value + value) - something
     else if (left.type === right.right.type) {
       node = Object.assign({ }, node)
       node.left = reduce({
         type: 'MathExpression',
-        operator: right.operator,
+        operator: op === '-' ? flip(right.operator) : right.operator,
         left: left,
         right: right.right
       }, precision)
@@ -183,7 +201,7 @@ function reduceAddSubExpression(node, precision) {
   return node
 }
 
-function reduceDivisionExpression(node) {
+function reduceDivisionExpression(node, precision) {
   if (!isValueType(node.right.type))
     return node
 
@@ -201,7 +219,7 @@ function reduceDivisionExpression(node) {
     ) {
       node.left.left.value /= node.right.value
       node.left.right.value /= node.right.value
-      return node.left
+      return reduce(node.left, precision)
     }
     return node
   }
@@ -255,7 +273,7 @@ function reduceMathExpression(node, precision) {
     case "-":
       return reduceAddSubExpression(node, precision)
     case "/":
-      return reduceDivisionExpression(node)
+      return reduceDivisionExpression(node, precision)
     case "*":
       return reduceMultiplicationExpression(node)
   }

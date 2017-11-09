@@ -324,3 +324,10 @@ test(
   'calc( (1em - calc( 10px + 1em)) / 2)',
   '-5px'
 )
+
+test(
+  'should not throw an exception when unknow function exist in calc',
+  testFixture,
+  'calc(constant(safe-area-inset-left) + 100px - 50px)',
+  'calc(constant(safe-area-inset-left) + 50px)'
+)

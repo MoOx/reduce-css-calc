@@ -39,6 +39,7 @@
 
 (calc)                                 return 'NESTED_CALC';
 (var\([^\)]*\))                        return 'CSS_VAR';
+([a-z]+\([a-z0-9-]+\))                 return 'UNKNOW_FUNCTION'
 ([a-z]+)                               return 'PREFIX';
 
 "("                                    return 'LPAREN';
@@ -72,6 +73,7 @@ expression
     | css_variable { $$ = $1; }
   	| css_value { $$ = $1; }
   	| value { $$ = $1; }
+    | UNKNOW_FUNCTION { $$ = { type: 'Unknow', value: $1 }; }
     ;
 
   value

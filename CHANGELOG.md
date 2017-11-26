@@ -1,3 +1,7 @@
+# 2.1.2 - 2017-11-26
+
+- Fixed: Incorrect reduction of division with custom property (e.g. `calc(var(--foo) / 2)`) ([#41](https://github.com/MoOx/reduce-css-calc/issues/41) - @Semigradsky)
+
 # 2.1.1 - 2017-10-12
 
 - Fixed: Incorrect reduction of nested expression (e.g. `calc( (1em - calc( 10px + 1em)) / 2)`) ([#39](https://github.com/MoOx/reduce-css-calc/pull/39) - @gyoshev)

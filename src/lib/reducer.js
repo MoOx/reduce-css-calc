@@ -223,10 +223,12 @@ function reduceDivisionExpression(node, precision) {
     }
     return node
   }
-
-  // value / value
-  node.left.value /= node.right.value
-  return node.left
+  // something / value
+  else if (isValueType(node.left.type)) {
+    node.left.value /= node.right.value
+    return node.left
+  }
+  return node
 }
 
 function reduceMultiplicationExpression(node) {

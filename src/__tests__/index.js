@@ -155,6 +155,13 @@ test(
 )
 
 test(
+  'should ignore calc with css variables (6)',
+  testFixture,
+  'calc(var(--popupHeight) / 2)',
+  'calc(var(--popupHeight) / 2)'
+)
+
+test(
   'should reduce calc with newline characters',
   testFixture,
   'calc(\n1rem \n* 2 \n* 1.5)',

@@ -124,11 +124,7 @@ function reduceAddSubExpression(node, precision) {
         right: right.left
       }, precision)
       node.right = right.right
-
-      if (node.operator === '-') {
-        node.operator = right.operator === '+' ? '-' : '+'
-      }
-
+      node.operator = op === '-' ? flip(right.operator) : right.operator
       return reduce(node, precision)
     }
     // value + (something + value) => (value + value) + something

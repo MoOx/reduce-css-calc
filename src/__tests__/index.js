@@ -57,6 +57,13 @@ test(
 )
 
 test(
+  'should reduce simple calc (7)',
+  testFixture,
+  'calc(100px + (100px - 100%))',
+  'calc(200px - 100%)'
+)
+
+test(
   'should reduce additions and subtractions (1)',
   testFixture,
   'calc(100% - 10px + 20px)',

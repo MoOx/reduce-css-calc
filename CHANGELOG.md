@@ -1,3 +1,8 @@
+# 2.1.4 - 2018-01-22
+
+- Prevent webpack parsing issue
+  (see https://github.com/zaach/jison/pull/352)
+
 # 2.1.3 - 2017-11-27
 
 - Fixed: Incorrect reduction for a specific case (e.g. `calc(1em + (1em - 5px))`) ([#43](https://github.com/MoOx/reduce-css-calc/pull/43) - @Justineo)

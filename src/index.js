@@ -14,6 +14,10 @@ export default (value, precision = 5) => {
 
     // stringify calc expression and produce an AST
     const contents = valueParser.stringify(node.nodes)
+
+    // skip constant() and env()
+    if (contents.indexOf('constant') >= 0 || contents.indexOf('env') >= 0) return;
+
     const ast = parser.parse(contents)
 
     // reduce AST to its simplest form, that is, either to a single value

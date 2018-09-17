@@ -338,3 +338,17 @@ test(
   'calc( (1em - calc( 10px + 1em)) / 2)',
   '-5px'
 )
+
+test(
+  'should skip constant()',
+  testFixture,
+  'calc(constant(safe-area-inset-left))',
+  'calc(constant(safe-area-inset-left))'
+)
+
+test(
+  'should skip env()',
+  testFixture,
+  'calc(env(safe-area-inset-left))',
+  'calc(env(safe-area-inset-left))'
+)

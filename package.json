@@ -1,6 +1,6 @@
 {
   "name": "reduce-css-calc",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "Reduce CSS calc() function to the maximum",
   "keywords": [
     "css",
@@ -36,7 +36,7 @@
     "eslint-plugin-babel": "^4.0.0",
     "eslint-plugin-import": "^2.2.0",
     "jison": "https://github.com/download13/jison#b7d6e0de7d2c2c1bde5451b8e99813843a473315",
-    "npmpub": "^3.1.0"
+    "npmpub": "^4.0.0"
   },
   "dependencies": {
     "css-unit-converter": "^1.1.1",

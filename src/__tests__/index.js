@@ -352,3 +352,10 @@ test(
   'calc(env(safe-area-inset-left))',
   'calc(env(safe-area-inset-left))'
 )
+
+test(
+  'should handle subtractions with different units',
+  testFixture,
+  'calc(100% - calc(666px + 1em + 2em + 100px))',
+  'calc(100% - 766px - 3em)'
+)

@@ -1,3 +1,7 @@
+# 2.1.6 - 2019-01-11
+
+- Fixed: Incorrect calculation when subtracting (e.g. `calc(100% - calc(120px + 1em + 2em + 100px))`) ([#52](https://github.com/MoOx/reduce-css-calc/pull/53) - @sylvainpolletvillard)
+
 # 2.1.5 - 2018-09-20
 
 - [Avoid breaking when seeing ` constant()`` or `env()`](https://github.com/MoOx/reduce-css-calc/commit/409c9ba2cd5e06e7f8f679f7f0c3c3a14ff3e673) by @dlee

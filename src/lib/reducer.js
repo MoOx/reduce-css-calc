@@ -62,7 +62,7 @@ function convertMathExpression(node, precision) {
   return node
 }
 
-function flip(operator) {
+export function flip(operator) {
   return operator === '+' ? '-' : '+'
 }
 

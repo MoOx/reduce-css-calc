@@ -1,3 +1,5 @@
+import { flip } from "./reducer";
+
 const order = {
   "*": 0,
   "/": 0,
@@ -28,6 +30,11 @@ function stringify(node, prec) {
 
       if (right.type === 'MathExpression' && order[op] < order[right.operator])
         str += "(" + stringify(right, prec) + ")"
+      else if (right.type === 'MathExpression' && op === "-" && ["+", "-"].includes(right.operator)) {
+        // fix #52 : a-(b+c) = a-b-c
+        right.operator = flip(right.operator);
+        str += stringify(right, prec)
+      }
       else
         str += stringify(right, prec)
 

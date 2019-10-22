@@ -1,4 +1,6 @@
-# reduce-css-calc [![Build Status](https://travis-ci.org/MoOx/reduce-css-calc.png)](https://travis-ci.org/MoOx/reduce-css-calc)
+# reduce-css-calc
+
+[![Build Status](https://travis-ci.org/MoOx/reduce-css-calc.svg)](https://travis-ci.org/MoOx/reduce-css-calc)
 
 > Reduce CSS calc() function to the maximum.
 
@@ -7,7 +9,7 @@ Particularly useful for packages like [rework-calc](https://github.com/reworkcss
 ## Installation
 
 ```console
-$ npm install reduce-css-calc
+npm install reduce-css-calc
 ```
 
 ## Usage
@@ -56,15 +58,17 @@ reduceCSSCalc("-moz-calc(50% - 2em)")
 
 See [unit tests](src/__tests__/index.js) for others examples.
 
+---
+
 ## Contributing
 
 Work on a branch, install dev-dependencies, respect coding style & run tests before submitting a bug fix or a feature.
 
 ```console
-$ git clone https://github.com/MoOx/reduce-css-calc.git
-$ git checkout -b patch-1
-$ npm install
-$ npm test
+git clone https://github.com/MoOx/reduce-css-calc.git
+git checkout -b patch-1
+npm install
+npm test
 ```
 
 ## [Changelog](CHANGELOG.md)

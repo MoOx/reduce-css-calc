@@ -35,7 +35,7 @@
     "eslint-config-i-am-meticulous": "^6.0.1",
     "eslint-plugin-babel": "^4.0.0",
     "eslint-plugin-import": "^2.2.0",
-    "jison": "https://github.com/download13/jison#b7d6e0de7d2c2c1bde5451b8e99813843a473315",
+    "jison-gho": "^0.6.1-216",
     "npmpub": "^4.0.0"
   },
   "dependencies": {

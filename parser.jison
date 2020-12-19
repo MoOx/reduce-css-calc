@@ -3,6 +3,7 @@
 /* lexical grammar */
 %lex
 %%
+(--[0-9a-z-A-Z-]*)                     return 'CSS_CPROP';
 \s+                                    /* skip whitespace */
 "*"                                    return 'MUL';
 "/"                                    return 'DIV';
@@ -38,11 +39,12 @@
 ([0-9]+("."[0-9]*)?|"."[0-9]+)\b       return 'NUMBER';
 
 (calc)                                 return 'NESTED_CALC';
-(var\([^\)]*\))                        return 'CSS_VAR';
+(var)                                  return 'CSS_VAR';
 ([a-z]+)                               return 'PREFIX';
 
 "("                                    return 'LPAREN';
 ")"                                    return 'RPAREN';
+","                                    return 'COMMA';
 
 <<EOF>>                                return 'EOF';
 
@@ -67,8 +69,8 @@ expression
   	| math_expression MUL math_expression { $$ = { type: 'MathExpression', operator: $2, left: $1, right: $3 }; }
   	| math_expression DIV math_expression { $$ = { type: 'MathExpression', operator: $2, left: $1, right: $3 }; }
   	| LPAREN math_expression RPAREN { $$ = $2; }
-    | NESTED_CALC LPAREN math_expression RPAREN { $$ = $3; }
-    | SUB PREFIX SUB NESTED_CALC LPAREN math_expression RPAREN { $$ = $6; }
+    | NESTED_CALC LPAREN math_expression RPAREN { $$ = { type: 'Calc', value: $3 }; }
+    | SUB PREFIX SUB NESTED_CALC LPAREN math_expression RPAREN { $$ = { type: 'Calc', value: $6, prefix: $2 }; }
     | css_variable { $$ = $1; }
   	| css_value { $$ = $1; }
   	| value { $$ = $1; }
@@ -80,7 +82,8 @@ expression
   	;
 
   css_variable
-    : CSS_VAR { $$ = { type: 'CssVariable', value: $1 }; }
+    : CSS_VAR LPAREN CSS_CPROP RPAREN { $$ = { type: 'CssVariable', value: $3 }; }
+    | CSS_VAR LPAREN CSS_CPROP COMMA math_expression RPAREN { $$ = { type: 'CssVariable', value: $3, fallback: $5 }; }
     ;
 
   css_value

@@ -169,6 +169,35 @@ test(
 )
 
 test(
+  'should ignore calc with css variables (7)',
+  testFixture,
+  'calc(var(--popupHeight, var(--defaultHeight, var(--height-150))) / 2)',
+  'calc(var(--popupHeight, var(--defaultHeight, var(--height-150))) / 2)'
+)
+
+test(
+  'should ignore calc with css variables (8)',
+  testFixture,
+  'calc(var(--popupHeight, var(--defaultHeight, calc(100% - 50px))) / 2)',
+  'calc(var(--popupHeight, var(--defaultHeight, calc(100% - 50px))) / 2)'
+)
+
+test(
+  'should ignore calc with css variables (9)',
+  testFixture,
+  'calc(var(--popupHeight, var(--defaultHeight, calc(100% - 50px + 25px))) / 2)',
+  'calc(var(--popupHeight, var(--defaultHeight, calc(100% - 25px))) / 2)'
+)
+
+test(
+  'should ignore calc with css variables (10)',
+  testFixture,
+  'calc(var(--popupHeight, var(--defaultHeight, 150px)) / 2)',
+  'calc(var(--popupHeight, var(--defaultHeight, 150px)) / 2)'
+)
+
+
+test(
   'should reduce calc with newline characters',
   testFixture,
   'calc(\n1rem \n* 2 \n* 1.5)',

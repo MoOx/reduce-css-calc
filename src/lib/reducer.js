@@ -3,6 +3,8 @@ import convert from './convert'
 function reduce(node, precision) {
   if (node.type === "MathExpression")
     return reduceMathExpression(node, precision)
+  if (node.type === "Calc")
+    return reduce(node.value, precision)
 
   return node
 }

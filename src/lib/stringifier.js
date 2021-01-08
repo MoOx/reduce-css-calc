@@ -28,22 +28,30 @@ function stringify(node, prec) {
 
       str += " " + node.operator + " "
 
-      if (right.type === 'MathExpression' && order[op] < order[right.operator])
+      if (right.type === 'MathExpression' && order[op] < order[right.operator]) {
         str += "(" + stringify(right, prec) + ")"
-      else if (right.type === 'MathExpression' && op === "-" && ["+", "-"].includes(right.operator)) {
+      } else if (right.type === 'MathExpression' && op === "-" && ["+", "-"].includes(right.operator)) {
         // fix #52 : a-(b+c) = a-b-c
         right.operator = flip(right.operator);
         str += stringify(right, prec)
-      }
-      else
+      } else {
         str += stringify(right, prec)
+      }
 
       return str
     }
     case "Value":
       return round(node.value, prec)
     case 'CssVariable':
-      return node.value
+      if (node.fallback) {
+        return `var(${node.value}, ${stringify(node.fallback, prec, true)})`
+      }
+      return `var(${node.value})`
+    case 'Calc':
+      if (node.prefix) {
+        return `-${node.prefix}-calc(${stringify(node.value, prec)})`;
+      }
+      return `calc(${stringify(node.value, prec)})`;
     default:
       return round(node.value, prec) + node.unit
   }

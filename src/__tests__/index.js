@@ -64,6 +64,13 @@ test(
 )
 
 test(
+  'should reduce simple calc (8)',
+  testFixture,
+  'calc(1PX + 1PX)',
+  '2PX'
+)
+
+test(
   'should reduce additions and subtractions (1)',
   testFixture,
   'calc(100% - 10px + 20px)',
@@ -75,6 +82,13 @@ test(
   testFixture,
   'calc(100% + 10px - 20px)',
   'calc(100% - 10px)'
+)
+
+test(
+  'should reduce additions and subtractions (3)',
+  testFixture,
+  'calc(100% + 10PX - 20PX)',
+  'calc(100% - 10PX)'
 )
 
 test(

@@ -1,7 +1,6 @@
 # reduce-css-calc
 
-[![Build Status](https://travis-ci.org/MoOx/reduce-css-calc.svg)](https://travis-ci.org/MoOx/reduce-css-calc)
-
+[![Build Status](https://github.com/MoOx/reduce-css-calc/workflows/Build/badge.svg)](https://github.com/MoOx/reduce-css-calc/actions)
 > Reduce CSS calc() function to the maximum.
 
 Particularly useful for packages like [rework-calc](https://github.com/reworkcss/rework-calc) or [postcss-calc](https://github.com/postcss/postcss-calc).

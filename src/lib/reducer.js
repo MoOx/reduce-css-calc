@@ -29,6 +29,7 @@ function isValueType(type) {
     case 'VminValue':
     case 'VmaxValue':
     case 'PercentageValue':
+    case 'PXValue':
     case 'Value':
       return true;
   }

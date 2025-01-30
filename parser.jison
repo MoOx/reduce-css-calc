@@ -36,6 +36,7 @@
 ([0-9]+("."[0-9]*)?|"."[0-9]+)vmin\b   return 'VMINS';
 ([0-9]+("."[0-9]*)?|"."[0-9]+)vmax\b   return 'VMAXS';
 ([0-9]+("."[0-9]*)?|"."[0-9]+)\%       return 'PERCENTAGE';
+([0-9]+("."[0-9]*)?|"."[0-9]+)PX\b     return 'PX';
 ([0-9]+("."[0-9]*)?|"."[0-9]+)\b       return 'NUMBER';
 
 (calc)                                 return 'NESTED_CALC';
@@ -101,5 +102,6 @@ expression
   	| VMINS { $$ = { type: 'VminValue', value: parseFloat($1), unit: 'vmin' }; }
   	| VMAXS { $$ = { type: 'VmaxValue', value: parseFloat($1), unit: 'vmax' }; }
   	| PERCENTAGE { $$ = { type: 'PercentageValue', value: parseFloat($1), unit: '%' }; }
+  	| PX { $$ = { type: 'PXValue', value: parseFloat($1), unit: 'PX' }; }
   	| SUB css_value { var prev = $2; prev.value *= -1; $$ = prev; }
     ;
